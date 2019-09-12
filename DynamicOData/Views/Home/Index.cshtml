@@ -1,0 +1,485 @@
+﻿
+@{
+    ViewBag.Title = "Query Testing";
+}
+<h2>
+    OData API Query Tester<a href="https://www.odata.org/documentation/" target="_blank" class="btn btn-link">
+        <span class="glyphicon glyphicon-info-sign"></span>
+    </a>
+</h2>
+<div class="btn-group" style="padding-bottom:1em;">
+    <a class="btn btn-info" data-toggle="collapse" href="#odataOptionCollapse" role="button">
+        Query Options
+    </a>
+    <a class="btn btn-info" data-toggle="collapse" href="#odataFilterOptionCollapse" role="button">
+        Query Filters
+    </a>
+    <a class="btn btn-info" data-toggle="collapse" href="#odataFunctionsCollapse" role="button">
+        Query Functions
+    </a>
+</div>
+<div class="row">
+    <div class="collapse" id="odataOptionCollapse">
+        <table class="table table-condensed">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Option</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <button class="btn btn-sm btn-warning">Insert</button>
+                    </td>
+                    <td>$expand</td>
+                    <td>Expands related entities inline.</td>
+                </tr>
+                <tr>
+                    <td>
+                        <button class="btn btn-sm btn-warning">Insert</button>
+                    </td>
+                    <td>$filter</td>
+                    <td>Filters the results, based on a Boolean condition.</td>
+                </tr>
+                <tr>
+                    <td>
+                        <button class="btn btn-sm btn-warning">Insert</button>
+                    </td>
+                    <td>$inlinecount</td>
+                    <td>Tells the server to include the total count of matching entities in the response. (Useful for server-side paging.)</td>
+                </tr>
+                <tr>
+                    <td>
+                        <button class="btn btn-sm btn-warning">Insert</button>
+                    </td>
+                    <td>$orderby</td>
+                    <td>Sorts the results.</td>
+                </tr>
+                <tr>
+                    <td>
+                        <button class="btn btn-sm btn-warning">Insert</button>
+                    </td>
+                    <td>$select</td>
+                    <td>Selects which properties to include in the response.</td>
+                </tr>
+                <tr>
+                    <td>
+                        <button class="btn btn-sm btn-warning">Insert</button>
+                    </td>
+                    <td>$skip</td>
+                    <td>Skips the first n results.</td>
+                </tr>
+                <tr>
+                    <td>
+                        <button class="btn btn-sm btn-warning">Insert</button>
+                    </td>
+                    <td>$top</td>
+                    <td>Returns only the first n the results.</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="collapse" id="odataFilterOptionCollapse">
+        <table class="table">
+            <tbody>
+                <tr>
+                    <th>Operator</th>
+                    <th>Description</th>
+                    <th>Example</th>
+                </tr>
+                <tr>
+                    <th colspan="3">Logical Operators</th>
+                </tr>
+                <tr>
+                    <td>Eq</td>
+                    <td>Equal</td>
+                    <td>/Suppliers?$filter=Address/City eq 'Redmond'</td>
+                </tr>
+                <tr>
+                    <td>Ne</td>
+                    <td>Not equal</td>
+                    <td>/Suppliers?$filter=Address/City ne 'London'</td>
+                </tr>
+                <tr>
+                    <td>Gt</td>
+                    <td>Greater than</td>
+                    <td>/Products?$filter=Price gt 20</td>
+                </tr>
+                <tr>
+                    <td>Ge</td>
+                    <td>Greater than or equal</td>
+                    <td>/Products?$filter=Price ge 10</td>
+                </tr>
+                <tr>
+                    <td>Lt</td>
+                    <td>Less than</td>
+                    <td>/Products?$filter=Price lt 20</td>
+                </tr>
+                <tr>
+                    <td>Le</td>
+                    <td>Less than or equal</td>
+                    <td>/Products?$filter=Price le 100</td>
+                </tr>
+                <tr>
+                    <td>And</td>
+                    <td>Logical and</td>
+                    <td>/Products?$filter=Price le 200 and Price gt 3.5</td>
+                </tr>
+                <tr>
+                    <td>Or</td>
+                    <td>Logical or</td>
+                    <td>/Products?$filter=Price le 3.5 or Price gt 200</td>
+                </tr>
+                <tr>
+                    <td>Not</td>
+                    <td>Logical negation</td>
+                    <td>/Products?$filter=not endswith(Description,'milk')</td>
+                </tr>
+                <tr>
+                    <th colspan="3">Arithmetic Operators</th>
+                </tr>
+                <tr>
+                    <td>Add</td>
+                    <td>Addition</td>
+                    <td>/Products?$filter=Price add 5 gt 10</td>
+                </tr>
+                <tr>
+                    <td>Sub</td>
+                    <td>Subtraction</td>
+                    <td>/Products?$filter=Price sub 5 gt 10</td>
+                </tr>
+                <tr>
+                    <td>Mul</td>
+                    <td>Multiplication</td>
+                    <td>/Products?$filter=Price mul 2 gt 2000</td>
+                </tr>
+                <tr>
+                    <td>Div</td>
+                    <td>Division</td>
+                    <td>/Products?$filter=Price div 2 gt 4</td>
+                </tr>
+                <tr>
+                    <td>Mod</td>
+                    <td>Modulo</td>
+                    <td>/Products?$filter=Price mod 2 eq 0</td>
+                </tr>
+                <tr>
+                    <th colspan="3">Grouping Operators</th>
+                </tr>
+                <tr>
+                    <td>( )</td>
+                    <td>Precedence grouping</td>
+                    <td>/Products?$filter=(Price sub 5) gt 10</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="collapse" id="odataFunctionsCollapse">
+        <table class="table">
+            <tbody>
+                <tr>
+                    <th>Function</th>
+                    <th>Example</th>
+                </tr>
+                <tr>
+                    <th colspan="2">String Functions</th>
+                </tr>
+                <tr>
+                    <td>bool substringof(string po, string p1)</td>
+                    <td>Customers?$filter=substringof('Alfreds', CompanyName) eq true</td>
+                </tr>
+                <tr>
+                    <td>bool endswith(string p0, string p1)</td>
+                    <td>Customers?$filter=endswith(CompanyName, 'Futterkiste') eq true</td>
+                </tr>
+                <tr>
+                    <td>bool startswith(string p0, string p1)</td>
+                    <td>Customers?$filter=startswith(CompanyName, 'Alfr') eq true</td>
+                </tr>
+                <tr>
+                    <td>int length(string p0)</td>
+                    <td>Customers?$filter=length(CompanyName) eq 19</td>
+                </tr>
+                <tr>
+                    <td>int indexof(string p0, string p1)</td>
+                    <td>Customers?$filter=indexof(CompanyName, 'lfreds') eq 1</td>
+                </tr>
+                <tr>
+                    <td>string replace(string p0, string find, string replace)</td>
+                    <td>Customers?$filter=replace(CompanyName, ' ', '') eq 'AlfredsFutterkiste'</td>
+                </tr>
+                <tr>
+                    <td>string substring(string p0, int pos)</td>
+                    <td>Customers?$filter=substring(CompanyName, 1) eq 'lfreds Futterkiste'</td>
+                </tr>
+                <tr>
+                    <td>string substring(string p0, int pos, int length)</td>
+                    <td>Customers?$filter=substring(CompanyName, 1, 2) eq 'lf'</td>
+                </tr>
+                <tr>
+                    <td>string tolower(string p0)</td>
+                    <td>Customers?$filter=tolower(CompanyName) eq 'alfreds futterkiste'</td>
+                </tr>
+                <tr>
+                    <td>string toupper(string p0)</td>
+                    <td>Customers?$filter=toupper(CompanyName) eq 'ALFREDS FUTTERKISTE'</td>
+                </tr>
+                <tr>
+                    <td>string trim(string p0)</td>
+                    <td>Customers?$filter=trim(CompanyName) eq 'Alfreds Futterkiste'</td>
+                </tr>
+                <tr>
+                    <td>string concat(string p0, string p1)</td>
+                    <td>Customers?$filter=concat(concat(City, ', '), Country) eq 'Berlin, Germany'</td>
+                </tr>
+                <tr>
+                    <th colspan="2">Date Functions</th>
+                </tr>
+                <tr>
+                    <td>int day(DateTime p0)</td>
+                    <td>Employees?$filter=day(BirthDate) eq 8</td>
+                </tr>
+                <tr>
+                    <td>int hour(DateTime p0)</td>
+                    <td>Employees?$filter=hour(BirthDate) eq 0</td>
+                </tr>
+                <tr>
+                    <td>int minute(DateTime p0)</td>
+                    <td>Employees?$filter=minute(BirthDate) eq 0</td>
+                </tr>
+                <tr>
+                    <td>int month(DateTime p0)</td>
+                    <td>Employees?$filter=month(BirthDate) eq 12</td>
+                </tr>
+                <tr>
+                    <td>int second(DateTime p0)</td>
+                    <td>Employees?$filter=second(BirthDate) eq 0</td>
+                </tr>
+                <tr>
+                    <td>int year(DateTime p0)</td>
+                    <td>Employees?$filter=year(BirthDate) eq 1948</td>
+                </tr>
+                <tr>
+                    <th class="colspan">Math Functions</th>
+                </tr>
+                <tr>
+                    <td>double round(double p0)</td>
+                    <td>Orders?$filter=round(Freight) eq 32d</td>
+                </tr>
+                <tr>
+                    <td>decimal round(decimal p0)</td>
+                    <td>Orders?$filter=round(Freight) eq 32</td>
+                </tr>
+                <tr>
+                    <td>double floor(double p0)</td>
+                    <td>Orders?$filter=round(Freight) eq 32d</td>
+                </tr>
+                <tr>
+                    <td>decimal floor(decimal p0)</td>
+                    <td>Orders?$filter=floor(Freight) eq 32</td>
+                </tr>
+                <tr>
+                    <td>double ceiling(double p0)</td>
+                    <td>Orders?$filter=ceiling(Freight) eq 33d</td>
+                </tr>
+                <tr>
+                    <td>decimal ceiling(decimal p0)</td>
+                    <td>Orders?$filter=floor(Freight) eq 33</td>
+                </tr>
+                <tr>
+                    <th colspan="2">Type Functions</th>
+                </tr>
+                <tr>
+                    <td>bool IsOf(type p0)</td>
+                    <td>Orders?$filter=isof('NorthwindModel.Order')</td>
+                </tr>
+                <tr>
+                    <td>bool IsOf(expression p0, type p1)</td>
+                    <td>Orders?$filter=isof(ShipCountry, 'Edm.String')</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xs-12 input-group input-group-lg">
+        <div class="input-group-prepend">
+            <span class="input-group-text">@(Request.Url.GetLeftPart(UriPartial.Authority) + "/odata/")</span>
+        </div>
+        <input class="form-control" type="text" id="testPageUrl" placeholder="Type in the Name of a DbSet property in your context" />
+        <div class="input-group-append">
+            <button id="loadJson" type="button" class="btn btn-success">
+                Send Request
+                <span id="spinnerRequest" class="spinner-grow spinner-grow-sm invisible align-middle" role="status" aria-hidden="true"></span>
+            </button>
+        </div>
+    </div>
+    <div id="alertsContainer" class="col-xs-12">
+
+    </div>
+</div>
+
+<div class="row">
+    <div class="custom-control custom-switch">
+        <input checked="checked" type="checkbox" class="custom-control-input option-toggle" id="jsonToggle" data-toggle="collapse" data-target="#jsonCollapse" />
+        <label class="custom-control-label" for="jsonToggle">Json</label>
+    </div> 
+    <div class="custom-control custom-switch">
+        <input checked="checked" type="checkbox" class="custom-control-input option-toggle" id="tableToggle" data-toggle="collapse" data-target="#tableCollapse" />
+        <label class="custom-control-label" for="tableToggle">Table</label>
+    </div> 
+</div>
+<div class="row">
+    <div class="collapse show w-100 option-collapse" id="jsonCollapse">
+        <div id="container">
+
+        </div>
+        <pre id="jsonContainer" class="bg-light col-12 w-100 border">
+        </pre> 
+    </div>
+</div>
+<div class="row">
+    <div class="collapse show w-100 option-collapse" id="tableCollapse">
+
+    </div>
+</div>
+
+@section scripts{
+    <script>
+        $('.option-collapse').on('show.bs.collapse', function () {
+            var relatedTargets = $(this).attr('id').replace('Collapse', 'Toggle');
+            $('#' + relatedTargets).attr('disabled', 'disabled');
+        });
+        $('.option-collapse').on('shown.bs.collapse', function () {
+            var relatedTargets = $(this).attr('id').replace('Collapse', 'Toggle');
+            $('#' + relatedTargets).removeAttr('disabled');
+        });
+        $('.option-collapse').on('hide.bs.collapse', function () {
+            var relatedTargets = $(this).attr('id').replace('Collapse', 'Toggle');
+            $('#' + relatedTargets).attr('disabled', 'disabled');
+        });
+        $('.option-collapse').on('hidden.bs.collapse', function () {
+            var relatedTargets = $(this).attr('id').replace('Collapse', 'Toggle');
+            $('#' + relatedTargets).removeAttr('disabled');
+        });
+
+        $("#testPageUrl").on('input', function () {
+            var testPageUrl = $("#testPageUrl");
+            testPageUrl.removeClass("alert-success");
+            testPageUrl.removeClass("alert-danger");
+
+            var requestedUrl = testPageUrl.val();
+            var badRequestAreas = requestedUrl.match(/[^\?\&\(\;][\$][^\$\?\&\(\;]*/g);
+            if (badRequestAreas != null) {
+                var badRequestUrlDisplay = requestedUrl;
+                for (var i = 0; i < badRequestAreas.length; i++) {
+                    var badRequestArea = badRequestAreas[i].substring(1, badRequestAreas[i].length);
+                    badRequestUrlDisplay = badRequestUrlDisplay.replace(badRequestArea, "<strong>" + badRequestArea + "</strong>");
+                }
+
+                $("#alertsContainer").html('<div class="alert alert-warning"><strong>Warning!</strong> You may have an invalid OData Query option due to a missing character before $ <br/>' + badRequestUrlDisplay + '</div>');
+                testPageUrl.addClass("alert-warning");
+            }
+            else {
+                $("#alertsContainer").html('');
+                testPageUrl.removeClass("alert-warning");
+            }
+        });
+
+        $("#loadJson").click(function () {
+            $("#spinnerRequest").removeClass("invisible");
+            var path = "@(Request.Url.GetLeftPart(UriPartial.Authority) + "/odata/")" + $("#testPageUrl").val().trim();
+            $.ajax({
+                url: path,
+                success: function (result) {
+                    var tableHtml = GenerateTableForObj(result);
+                    $("#tableCollapse").html(tableHtml);
+                    $("#container").html("<label>Raw JSON:</label></br>");
+                    $("#jsonContainer").html(JSON.stringify(result, undefined, 2));
+                    $("#testPageUrl").addClass("alert-success");
+                },
+                error: function (result) {
+
+                    $("#container").html("<label>" + result.status + ": " + result.statusText + ":</label>");
+                    if (result.responseJSON)
+                        $("#jsonContainer").html(JSON.stringify(result.responseJSON, undefined, 2));
+
+                    $("#testPageUrl").addClass("alert-danger");
+                }
+            }).always(function () {
+                $("#spinnerRequest").addClass("invisible");
+            });
+        });
+
+        function GenerateTableForObj(obj) {
+            var data = [];
+            if (obj.value && obj.value.constructor === Array) {
+                data = obj.value;
+            }
+            else {
+                var transferObj = obj;
+                transferObj.id = 1;
+                data.push(transferObj);
+            }
+            var table = '<table class="table table-responsive table-condensed table-hover table-striped">';
+            var headers = Object.getOwnPropertyNames(data[0]);
+            var headerRow = "<tr><th>" + headers.join("</th><th>") + "</th></tr>";
+
+            table += headerRow;
+
+            var objectKeys = Object.keys(data[0]);
+
+            var dataRows = "";
+            for (var i = 0; i < data.length; i++) {
+                dataRows += "<tr>";
+                var item = data[i];
+                for (var x = 0; x < objectKeys.length; x++) {
+                    value = item[objectKeys[x]];
+
+                    dataRows += "<td>";
+                    if (typeof value === 'object') {
+                        dataRows += '<button class="btn btn-link"  data-toggle="collapse" href="#' + i + objectKeys[x] + 'NestedTable" role="button">' + objectKeys[x] + '</button>';
+                        dataRows += '<div class="collapse" id="' + i + objectKeys[x] + 'NestedTable">' + GenerateTableForObj(value) + '</div>';
+                    }
+                    else
+                        dataRows += value;
+                    dataRows += "</td>";
+                }
+                dataRows += "</tr>";
+            }
+            table += dataRows + "</table>";
+            return table;
+        }
+
+        $("#testPageUrl").keyup(function (event) {
+            if (event.keyCode === 13) {
+                $("#loadJson").click();
+            }
+        });
+
+        $("#odataOptionCollapse").find("button").click(function () {
+            var item = $(this).parent().parent().children("td:nth-child(2)").html();
+            var currentURL = $("#testPageUrl").val();
+            if (!currentURL)
+                return;
+            if (currentURL.match(/[^?&]$/).length > 0) {
+                if (currentURL.includes("?")) {
+                    $("#testPageUrl").val(currentURL + "&" + item + "=");
+                }
+                else {
+                    $("#testPageUrl").val(currentURL + "?" + item + "=");
+                }
+            }
+            else if (currentURL.endsWith("$")) {
+                $("#testPageUrl").val(currentURL + item.substring(1, item.length) + "=");
+            }
+            else {
+                $("#testPageUrl").val(currentURL + item + "=");
+            }
+        });
+
+    </script>
+}
